@@ -148,6 +148,7 @@ export function PaymentForm({ assets = [], vault }: PaymentFormProps) {
     <div className="w-full flex flex-col mt-4 items-center">
       {positions.map((position, i) => (
         <PaymentPosition
+          key={i}
           assets={assets}
           availableAssets={availableAssets}
           position={position}

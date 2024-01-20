@@ -20,3 +20,37 @@ export const SUPPORTED_CURRENCIES = new Map([
       ?.map((a) => a.toLowerCase()) || [],
   ],
 ]);
+
+// export const VAULT_ABI = [
+//   {
+//     inputs: [],
+//     name: "requestedAmount",
+//     outputs: [
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//     ],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+//   {
+//     inputs: [],
+//     name: "fillPercent",
+//     outputs: [
+//       {
+//         internalType: "uint256",
+//         name: "",
+//         type: "uint256",
+//       },
+//     ],
+//     stateMutability: "view",
+//     type: "function",
+//   },
+// ];
+
+export const VAULT_ABI = [
+  "function requestedAmount() view returns(uint256)",
+  "function fillPercent() view returns(uint256)",
+];
