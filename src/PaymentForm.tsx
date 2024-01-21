@@ -101,7 +101,7 @@ function PaymentPosition({
 
 export function PaymentForm({ assets = [], vault }: PaymentFormProps) {
   const [positions, setPositions] = useState<Array<Row>>([]);
-  const { pay, isPending, error } = usePay();
+  const { pay } = usePay();
 
   const addRow = useCallback(() => {
     setPositions([

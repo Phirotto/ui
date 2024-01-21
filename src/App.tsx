@@ -22,9 +22,7 @@ function checkContext({ connected, safe }: ReturnType<typeof useSafeAppsSDK>) {
 }
 
 function App() {
-  const { connected, chainSupported, address, isReadOnly } = checkContext(
-    useSafeAppsSDK()
-  );
+  const { address } = checkContext(useSafeAppsSDK());
   const { data: vault } = useVaultInfo();
 
   const { data } = useBalances();
