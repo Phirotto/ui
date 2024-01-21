@@ -12,9 +12,11 @@ import { Input } from "./components/ui/input";
 import { Label } from "./components/ui/label";
 import BigNumber from "bignumber.js";
 import { VaultInfo } from "./useVaultInfo";
+import { usePay } from "./usePay";
 
 type Row = {
   assetName?: string;
+  assetAddress?: string;
   balance: number;
 };
 
@@ -99,6 +101,7 @@ function PaymentPosition({
 
 export function PaymentForm({ assets = [], vault }: PaymentFormProps) {
   const [positions, setPositions] = useState<Array<Row>>([]);
+  const { pay, isPending, error } = usePay();
 
   const addRow = useCallback(() => {
     setPositions([
@@ -121,6 +124,9 @@ export function PaymentForm({ assets = [], vault }: PaymentFormProps) {
     (i: number, v: string) => {
       const newPositions = [...positions];
       newPositions[i].assetName = v;
+      newPositions[i].assetAddress = assets.find(
+        (a) => a.tokenInfo.symbol === v
+      )?.tokenInfo.address;
       setPositions(newPositions);
     },
     [positions, setPositions]
@@ -171,12 +177,22 @@ export function PaymentForm({ assets = [], vault }: PaymentFormProps) {
         {totalPayout}/{vault.debt.decimalPlaces(2).toNumber()}
       </Label>
 
-      <Button
-        className="mt-4 bg-slate-400 hover:bg-slate-600 min-w-[150px] rounded"
-        disabled={vault.debt.lte(0)}
-      >
-        Pay
-      </Button>
+      {
+        <Button
+          className="mt-4 bg-slate-400 hover:bg-slate-600 min-w-[150px] rounded"
+          disabled={vault.debt.lte(0)}
+          onClick={() =>
+            pay(
+              positions.map((p) => ({
+                address: p.assetAddress!,
+                amount: BigNumber(p.balance).multipliedBy(BigNumber(10).pow(6)),
+              }))
+            )
+          }
+        >
+          Pay
+        </Button>
+      }
     </div>
   );
 }
