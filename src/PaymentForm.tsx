@@ -186,6 +186,7 @@ export function PaymentForm({ assets = [], vault }: PaymentFormProps) {
               positions.map((p) => ({
                 address: p.assetAddress!,
                 amount: BigNumber(p.balance).multipliedBy(BigNumber(10).pow(6)),
+                amountUSD: BigNumber(p.balance),
               }))
             )
           }

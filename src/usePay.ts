@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import BigNumber from "bignumber.js";
 import { Contract } from "ethers";
 
-type Position = { address: string; amount: BigNumber.Value };
+type Position = { address: string; amount: BigNumber.Value; amountUSD: BigNumber.Value };
 
 type UsePayResult = {
   pay(entries: Array<Position>): void;
@@ -45,7 +45,7 @@ export function usePay(): UsePayResult {
             data: gateway.encodeFunctionData("deposit", [
               import.meta.env.VITE_GATEWAY_VAULT_NAME,
               p.address,
-              p.amount.toString(),
+              p.amountUSD.toString(),
             ]),
           })),
         ],
