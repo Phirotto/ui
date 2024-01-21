@@ -101,6 +101,7 @@ function PaymentPosition({
 
 export function PaymentForm({ assets = [], vault }: PaymentFormProps) {
   const [positions, setPositions] = useState<Array<Row>>([]);
+  const [vaultName, setVaultName] = useState<string>("");
   const { pay } = usePay();
 
   const addRow = useCallback(() => {
@@ -178,6 +179,15 @@ export function PaymentForm({ assets = [], vault }: PaymentFormProps) {
       </Label>
 
       {
+        <Input
+          type="string"
+          id="amount"
+          placeholder="Vault Name"
+          onChange={(e) => setVaultName(e.target.value)}
+        />
+      }
+
+      {
         <Button
           className="mt-4 bg-slate-400 hover:bg-slate-600 min-w-[150px] rounded"
           disabled={vault.debt.lte(0)}
@@ -187,6 +197,7 @@ export function PaymentForm({ assets = [], vault }: PaymentFormProps) {
                 address: p.assetAddress!,
                 amount: BigNumber(p.balance).multipliedBy(BigNumber(10).pow(6)),
                 amountUSD: BigNumber(p.balance),
+                vaultName: vaultName,
               }))
             )
           }
